@@ -1,27 +1,66 @@
-# TimezonePicker
+# MomentTimezonePicker
+[![NPM](https://nodei.co/npm/moment-timezone-picker.png)](https://nodei.co/npm/moment-timezone-picker/)
+[![npm version](https://badge.fury.io/js/moment-timezone-picker.svg)](https://badge.fury.io/js/moment-timezone-picker)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
+## Dependencies
+For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
+For time core [moment-timezone](https://momentjs.com/timezone/)
 
-## Development server
+## Getting started
+### Step 1: Install 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### NPM
+```shell
+npm i moment-timezone-picker --save
+```
 
-## Code scaffolding
+### Step 2: Import the MomentTimezonePickerModule
+```js
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+import { AppComponent } from './app.component';
+import { MomentTimezonePickerModule } from 'moment-timezone-picker'; //add this
 
-## Build
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    MomentTimezonePickerModule //add this
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Step 3: Configuration
+#### Inputs
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+|[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
 
-## Running unit tests
+#### Outputs
+| Output  | Description |
+| ----------- | ------------- |
+| (onselect) | Returns object {name:string; nameValue: string; timeValue: string;}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Contributor
+- [Roman Yanush](https://github.com/Romko775/)
 
-## Running end-to-end tests
+----------------------
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Edit package
+### Clone the package
+```sh
+git clone https://github.com/Romko775/ng-moment-timezone-picker.git
+```
+#### Edit the `moment-timezone-picker` library
+#### Run commands & publish
+```sh
+ng build moment-timezome-picker
+cd dist/moment-timezome-picker
+npm publish
+```
