@@ -133,6 +133,41 @@
           }
         }
       }
+    },
+    "moment-timezone-picker": {
+      "root": "projects/moment-timezone-picker",
+      "sourceRoot": "projects/moment-timezone-picker/src",
+      "projectType": "library",
+      "prefix": "ng",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/moment-timezone-picker/tsconfig.lib.json",
+            "project": "projects/moment-timezone-picker/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/moment-timezone-picker/src/test.ts",
+            "tsConfig": "projects/moment-timezone-picker/tsconfig.spec.json",
+            "karmaConfig": "projects/moment-timezone-picker/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/moment-timezone-picker/tsconfig.lib.json",
+              "projects/moment-timezone-picker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "timezone-picker"

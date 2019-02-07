@@ -16,6 +16,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "moment-timezone-picker": [
+        "dist/moment-timezone-picker"
+      ],
+      "moment-timezone-picker/*": [
+        "dist/moment-timezone-picker/*"
+      ]
+    }
   }
 }
