@@ -3,5 +3,9 @@
   "dest": "../../dist/moment-timezone-picker",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@ng-select/ng-select",
+    "moment-timezone"
+  ]
 }
