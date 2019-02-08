@@ -36,7 +36,14 @@ import { MomentTimezonePickerModule } from 'moment-timezone-picker'; //add this
 export class AppModule { }
 ```
 
-### Step 3: Configuration
+### Step 3: Add in component html
+
+```html
+<ng-moment-timezone-picker (onselect)="yourFunc($event)" [customPlaceholderText]="yourText">
+</ng-moment-timezone-picker>
+```
+
+### Step 4: Configuration
 #### Inputs
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
