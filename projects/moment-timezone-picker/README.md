@@ -1,6 +1,13 @@
 # MomentTimezonePicker
 [![NPM](https://nodei.co/npm/moment-timezone-picker.png)](https://nodei.co/npm/moment-timezone-picker/)
-[![npm version](https://badge.fury.io/js/moment-timezone-picker.svg)](https://badge.fury.io/js/moment-timezone-picker)
+
+![npm version](https://img.shields.io/npm/v/moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/npm/l/moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/npm/dt/moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/github/last-commit/romko775/ng-moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/github/repo-size/romko775/ng-moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/github/languages/code-size/romko775/ng-moment-timezone-picker.svg?style=flat-square)
+![](https://img.shields.io/github/languages/count/romko775/ng-moment-timezone-picker.svg?style=flat-square)
 
 ## Dependencies
 For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
