@@ -46,7 +46,8 @@ export class AppModule { }
 ### Step 3: Add in component html
 
 ```html
-<ng-moment-timezone-picker (onselect)="yourFunc($event)" [customPlaceholderText]="yourText">
+<ng-moment-timezone-picker (onselect)="yourFunc($event)" 
+                            [customPlaceholderText]="yourText">
 </ng-moment-timezone-picker>
 ```
 
@@ -55,11 +56,22 @@ export class AppModule { }
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
+|[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. |
 
 #### Outputs
 | Output  | Description |
 | ----------- | ------------- |
-| (onselect) | Returns object {name:string; nameValue: string; timeValue: string;}
+| (onselect) | Returns object with 5 keys |
+
+#### Object
+| Field | Type | Example |
+|-------|------|---------|
+| abbr | `string` | `GMT` |
+| group | `string` | `Europe` |
+| nameValue | `string` | `Europe/London` |
+| timeValue | `string` | `+00:00` |
+| name | `string` | `Europe/London (+00:00)` |
+
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)
