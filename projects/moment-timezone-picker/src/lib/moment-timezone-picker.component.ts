@@ -46,7 +46,6 @@ export class MomentTimezonePickerComponent implements OnInit {
       this.emitChanges(this.userZone);
     }
   }
-
   emitChanges(event: TZone) {
     this.onselect.emit(event);
   }
