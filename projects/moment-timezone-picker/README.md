@@ -56,14 +56,14 @@ export class AppModule { }
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
-|[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. |
+|[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
 
 #### Outputs
 | Output  | Description |
 | ----------- | ------------- |
-| (onselect) | Returns object with 5 keys |
+| (onselect) | Returns object with 5 keys (TZone) |
 
-#### Object
+#### Object: TZone
 | Field | Type | Example |
 |-------|------|---------|
 | abbr | `string` | `GMT` |
