@@ -53,7 +53,6 @@ export class MomentTimezonePickerComponent implements OnInit {
     });
   }
   emitChanges(event) {
-    console.log(event);
     this.onselect.emit(event);
   }
 }
