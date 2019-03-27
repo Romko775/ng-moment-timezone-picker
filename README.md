@@ -57,6 +57,7 @@ export class AppModule { }
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
 |[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
+|[setZone] | `string` | `null` | no | Allows to set default zone on init. Example `America/Los_Angeles`.  |
 
 #### Outputs
 | Output  | Description |
@@ -75,6 +76,7 @@ export class AppModule { }
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)
+
 
 
 ----------------------
