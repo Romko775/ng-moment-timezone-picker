@@ -28,6 +28,20 @@ export class TZone {
 })
 export class MomentTimezonePickerComponent implements OnInit {
 
+  _setZone: string = null;
+  @Input('setZone')
+  set setZone(zone: string) {
+    if (zone && typeof zone === 'string' && zone.length > 0) {
+      this._setZone = zone;
+    } else {
+      this._setZone = null;
+    }
+  }
+
+  get setZone(): string {
+    return this._setZone;
+  }
+
   @Input() customPlaceholderText = 'Choose...';
   @Input() getUserZone = false;
   @Output() onselect: EventEmitter<TZone> = new EventEmitter<TZone>();
@@ -45,7 +59,11 @@ export class MomentTimezonePickerComponent implements OnInit {
       this.userZone = this.setObjectZone(momentZone.tz.guess(true));
       this.emitChanges(this.userZone);
     }
+    if (this.setZone) {
+      this.userZone = this.setObjectZone(this.setZone);
+    }
   }
+
   emitChanges(event: TZone) {
     this.onselect.emit(event);
   }
