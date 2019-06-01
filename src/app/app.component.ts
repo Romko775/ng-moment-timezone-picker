@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'tz-root',
@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  log(event) {
-    console.log(event);
+
+  zone: string;
+
+  setZone(event) {
+    this.zone = <string>event;
   }
 }
