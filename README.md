@@ -9,6 +9,16 @@
 ![](https://img.shields.io/github/languages/code-size/romko775/ng-moment-timezone-picker.svg?style=flat-square)
 ![](https://img.shields.io/github/languages/count/romko775/ng-moment-timezone-picker.svg?style=flat-square)
 
+## Demo
+See demo [here](https://romko775.github.io/ng-moment-timezone-picker/).
+
+## Versions
+| Angular | Version |
+| --- | --- |
+| 8 | 1.x.x |
+| 7 | 0.x.x |
+
+
 ## Dependencies
 For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
 For time core [moment-timezone](https://momentjs.com/timezone/)
