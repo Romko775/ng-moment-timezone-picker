@@ -1,3 +1,11 @@
-<ng-moment-timezone-picker (onselect)="log($event)" [setZone]="'America/Los_Angeles'">
+<div class="main">
+  <span>
+    Zone: <span>{{zone | json}}</span>
+  </span>
+  <br>
+  <br>
 
-</ng-moment-timezone-picker>
+  <ng-moment-timezone-picker (onselect)="setZone($event)">
+
+  </ng-moment-timezone-picker>
+</div>
