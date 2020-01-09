@@ -63,6 +63,7 @@ export class AppModule { }
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
+|[customNotFoundText] | `string` | `No zone found` | no | Allows you to localize not found text |
 |[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
 |[setZone] | `string` | `null` | no | Allows to set default zone on init. Example `America/Los_Angeles`.  |
 
@@ -96,7 +97,7 @@ git clone https://github.com/Romko775/ng-moment-timezone-picker.git
 #### Edit the `moment-timezone-picker` library
 #### Run commands & publish
 ```sh
-ng build moment-timezome-picker
-cd dist/moment-timezome-picker
+ng build moment-timezone-picker
+cd dist/moment-timezone-picker
 npm publish
 ```

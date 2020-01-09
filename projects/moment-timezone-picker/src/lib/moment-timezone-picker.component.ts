@@ -20,6 +20,7 @@ export class TZone {
                  [groupBy]="'group'"
                  bindLabel="name"
                  [placeholder]="customPlaceholderText"
+                 [notFoundText]="customNotFoundText"
                  [(ngModel)]="userZone">
       </ng-select>
     </div>
@@ -43,6 +44,7 @@ export class MomentTimezonePickerComponent implements OnInit {
   }
 
   @Input() customPlaceholderText = 'Choose...';
+  @Input() customNotFoundText = 'No zone found';
   @Input() getUserZone = false;
   @Output() onselect: EventEmitter<TZone> = new EventEmitter<TZone>();
   timeZones: Array<TZone>;
