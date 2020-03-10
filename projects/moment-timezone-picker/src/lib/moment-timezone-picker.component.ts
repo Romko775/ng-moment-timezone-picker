@@ -14,8 +14,8 @@ export class TZone {
   template: `
     <div class="wrapper">
       <ng-select [items]="timeZones"
-                 [clearable]="false"
-                 [virtualScroll]="true"
+                 [clearable]="clearable"
+                 [virtualScroll]="virtualScroll"
                  (change)="emitChanges($event)"
                  [groupBy]="'group'"
                  bindLabel="name"
@@ -46,6 +46,9 @@ export class MomentTimezonePickerComponent implements OnInit {
   @Input() customPlaceholderText = 'Choose...';
   @Input() customNotFoundText = 'No zone found';
   @Input() getUserZone = false;
+  @Input() clearable = false;
+  @Input() virtualScroll = true;
+  
   @Output() onselect: EventEmitter<TZone> = new EventEmitter<TZone>();
   timeZones: Array<TZone>;
   userZone: TZone = null;
