@@ -1,5 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import * as momentZone from 'moment-timezone';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 export class TZone {
   name: string;
@@ -12,68 +25,88 @@ export class TZone {
 @Component({
   selector: 'ng-moment-timezone-picker',
   template: `
-    <div class="wrapper">
-      <ng-select [items]="timeZones"
+    <div class="wrapper" [formGroup]="form">
+      <ng-select [formControlName]="'timezone'"
+                 [items]="timeZones"
                  [clearable]="clearable"
                  [virtualScroll]="virtualScroll"
-                 (change)="emitChanges($event)"
                  [groupBy]="'group'"
                  bindLabel="name"
                  [placeholder]="customPlaceholderText"
-                 [notFoundText]="customNotFoundText"
-                 [(ngModel)]="userZone">
+                 [notFoundText]="customNotFoundText">
       </ng-select>
     </div>
   `,
-  styleUrls: ['./moment-timezone-picker.scss']
-})
-export class MomentTimezonePickerComponent implements OnInit {
-
-  _setZone: string = null;
-  @Input('setZone')
-  set setZone(zone: string) {
-    if (zone && typeof zone === 'string' && zone.length > 0) {
-      this._setZone = zone;
-    } else {
-      this._setZone = null;
+  styleUrls: ['./moment-timezone-picker.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MomentTimezonePickerComponent),
+      multi: true
     }
-  }
+  ],
+  encapsulation: ViewEncapsulation.Emulated
+})
+export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, ControlValueAccessor {
 
-  get setZone(): string {
-    return this._setZone;
-  }
+  @Input() getUserZone = false;
 
+  /**
+   * Setup section.
+   */
   @Input() customPlaceholderText = 'Choose...';
   @Input() customNotFoundText = 'No zone found';
-  @Input() getUserZone = false;
   @Input() clearable = false;
   @Input() virtualScroll = true;
-  
-  @Output() onselect: EventEmitter<TZone> = new EventEmitter<TZone>();
-  timeZones: Array<TZone>;
-  userZone: TZone = null;
 
-  constructor() {
+  /**
+   * Internals section.
+   */
+  timeZones: Array<TZone>;
+  form: FormGroup;
+  private propagateChange: (_: any) => {};
+  private destroy$ = new Subject<void>();
+
+  constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.timeZones = momentZone.tz.names().map((zone: string) => {
-      return this.setObjectZone(zone);
+    this.timeZones = momentZone.tz.names().map((zone: string) => this.formatZone(zone));
+    this.form = this.fb.group({
+      timezone: []
     });
-    if (this.getUserZone) {
-      this.userZone = this.setObjectZone(momentZone.tz.guess(true));
-      this.emitChanges(this.userZone);
-    }
-    if (this.setZone) {
-      this.userZone = this.setObjectZone(this.setZone);
-    }
+
+    /**
+     * Value change subscription.
+     */
+    this.form.get('timezone').valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.fireChanges());
   }
 
-  emitChanges(event: TZone) {
-    this.onselect.emit(event);
+  ngAfterViewInit(): void {
+    this.guessUserTimezone();
   }
 
-  setObjectZone(zone: string): TZone {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private guessUserTimezone(): void {
+    setTimeout(() => {
+      if (this.getUserZone) {
+        const guessedZone = momentZone.tz.guess(true);
+        this.form.get('timezone').setValue(this.formatZone(guessedZone));
+      }
+    });
+  }
+
+  /**
+   * Make TZone object from simple string.
+   * @link ngOnInit
+   */
+  formatZone(zone: string): TZone {
     const utc: string = momentZone.tz(zone).format('Z');
     const abbr: string = momentZone.tz(zone).zoneAbbr();
     return {
@@ -83,6 +116,60 @@ export class MomentTimezonePickerComponent implements OnInit {
       group: zone.split('/', 1)[0],
       abbr: abbr
     };
+  }
+
+  /**
+   * Propagate result to parent component.
+   */
+  private fireChanges() {
+    if (this.propagateChange) {
+      this.propagateChange(this.form.get('timezone').value);
+    }
+  }
+
+  /**
+   * Clear selection.
+   */
+  private clearZone() {
+    this.form.get('timezone').setValue(null);
+  }
+
+  /**
+   * Handle parent imports changes.
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.getUserZone && changes.getUserZone.currentValue) {
+      this.guessUserTimezone();
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+  }
+
+  /**
+   * Handle parent model value changes.
+   */
+  writeValue(zone: string | TZone): void {
+    if (zone) {
+      let _zone: TZone = null;
+
+      if (typeof zone === 'string' && zone.length > 0) {
+        _zone = this.timeZones.find(z => z.nameValue === zone);
+      } else if (typeof zone === 'object') {
+        _zone = this.timeZones.find(z => z.nameValue === zone.nameValue);
+      }
+
+      if (_zone) {
+        this.form.get('timezone').setValue(_zone);
+      }
+
+    } else {
+      this.clearZone();
+    }
   }
 
 }

@@ -5,7 +5,6 @@
   <br>
   <br>
 
-  <ng-moment-timezone-picker (onselect)="setZone($event)">
-
+  <ng-moment-timezone-picker [getUserZone]="getUserZone" [(ngModel)]="zone">
   </ng-moment-timezone-picker>
 </div>
