@@ -12,9 +12,11 @@
 ## Versions
 | Angular | Version |
 | --- | --- |
+| 10 | 2.x.x |
 | 8 | 1.x.x |
 | 7 | 0.x.x |
 
+For older version see [OLD_VERSIONS_README.md](./OLD_VERSION_README.md)
 
 ## Dependencies
 For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
@@ -51,11 +53,18 @@ export class AppModule { }
 ```
 
 ### Step 3: Add in component html
-
+#### 1) As model
 ```html
-<ng-moment-timezone-picker (onselect)="yourFunc($event)" 
-                            [customPlaceholderText]="yourText">
+<ng-moment-timezone-picker [(ngModel)]="yourModel">
 </ng-moment-timezone-picker>
+```
+
+#### 2) As reactive form
+```html
+<div [formGroup]="your">
+<ng-moment-timezone-picker [formControlName]="'yourControlName'">
+</ng-moment-timezone-picker>
+</div>
 ```
 
 ### Step 4: Configuration
@@ -65,12 +74,8 @@ export class AppModule { }
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
 |[customNotFoundText] | `string` | `No zone found` | no | Allows you to localize not found text |
 |[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
-|[setZone] | `string` | `null` | no | Allows to set default zone on init. Example `America/Los_Angeles`.  |
-
-#### Outputs
-| Output  | Description |
-| ----------- | ------------- |
-| (onselect) | Returns object with 5 keys (TZone) |
+|[clearable] | `boolean` | `false` | no | Sets that if select can be clearable. |
+|[virtualScroll] | `boolean` | `true` | no | Sets select to use virtual scroll. |
 
 #### Object: TZone
 | Field | Type | Example |
@@ -84,20 +89,3 @@ export class AppModule { }
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)
-
-
-
-----------------------
-
-# Edit package
-### Clone the package
-```sh
-git clone https://github.com/Romko775/ng-moment-timezone-picker.git
-```
-#### Edit the `moment-timezone-picker` library
-#### Run commands & publish
-```sh
-ng build moment-timezone-picker
-cd dist/moment-timezone-picker
-npm publish
-```

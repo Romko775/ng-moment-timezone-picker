@@ -49,11 +49,10 @@ export class TZone {
 })
 export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, ControlValueAccessor {
 
-  @Input() getUserZone = false;
-
   /**
    * Setup section.
    */
+  @Input() getUserZone = false;
   @Input() customPlaceholderText = 'Choose...';
   @Input() customNotFoundText = 'No zone found';
   @Input() clearable = false;
