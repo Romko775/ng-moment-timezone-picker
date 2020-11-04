@@ -1,3 +1,5 @@
+## This documentation is valid for versions 1.x.x and lower
+
 # MomentTimezonePicker
 [![NPM](https://nodei.co/npm/moment-timezone-picker.png)](https://nodei.co/npm/moment-timezone-picker/)
 
@@ -12,11 +14,9 @@
 ## Versions
 | Angular | Version |
 | --- | --- |
-| 10 | 2.x.x |
 | 8 | 1.x.x |
 | 7 | 0.x.x |
 
-For older version see [OLD_VERSIONS_README.md](./OLD_VERSION_README.md)
 
 ## Dependencies
 For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
@@ -53,18 +53,11 @@ export class AppModule { }
 ```
 
 ### Step 3: Add in component html
-#### 1) As model
-```html
-<ng-moment-timezone-picker [(ngModel)]="yourModel">
-</ng-moment-timezone-picker>
-```
 
-#### 2) As reactive form
 ```html
-<div [formGroup]="your">
-<ng-moment-timezone-picker [formControlName]="'yourControlName'">
+<ng-moment-timezone-picker (onselect)="yourFunc($event)" 
+                            [customPlaceholderText]="yourText">
 </ng-moment-timezone-picker>
-</div>
 ```
 
 ### Step 4: Configuration
@@ -74,8 +67,12 @@ export class AppModule { }
 |[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
 |[customNotFoundText] | `string` | `No zone found` | no | Allows you to localize not found text |
 |[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
-|[clearable] | `boolean` | `false` | no | Sets that if select can be clearable. |
-|[virtualScroll] | `boolean` | `true` | no | Sets select to use virtual scroll. |
+|[setZone] | `string` | `null` | no | Allows to set default zone on init. Example `America/Los_Angeles`.  |
+
+#### Outputs
+| Output  | Description |
+| ----------- | ------------- |
+| (onselect) | Returns object with 5 keys (TZone) |
 
 #### Object: TZone
 | Field | Type | Example |
