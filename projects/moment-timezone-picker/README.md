@@ -67,7 +67,15 @@ export class AppModule { }
 </div>
 ```
 
-### Step 4: Configuration
+### Step 4: Include package theme
+In component `*.scss` or `*.sass` import theme
+```scss
+@import "~node_modules/moment-timezone-picker/assets/moment-timezone-picker.theme";
+```
+
+Or write own styles :)
+
+### Step 5: Configuration
 #### Inputs
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |

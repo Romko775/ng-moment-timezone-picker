@@ -22,6 +22,7 @@
     "@ng-select/ng-select": "^5.0.8",
     "core-js": "^3.6.5",
     "moment-timezone": "^0.5.31",
+    "moment-timezone-picker": "file:dist/moment-timezone-picker",
     "rxjs": "~6.6.3",
     "zone.js": "~0.11.3"
   },
