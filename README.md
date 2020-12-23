@@ -82,6 +82,7 @@ In component `*.scss` or `*.sass` import theme
 |[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
 |[clearable] | `boolean` | `false` | no | Sets that if select can be clearable. |
 |[virtualScroll] | `boolean` | `true` | no | Sets select to use virtual scroll. |
+|[disabled] | `boolean` | `false` | no | Disables the ng-select component |
 
 #### Object: TZone
 | Field | Type | Example |

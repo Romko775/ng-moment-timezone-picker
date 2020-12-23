@@ -1,3 +1,4 @@
+<button class="btn" (click)="toggle()">Toggle disabled</button>
 <div class="main">
   <span>
     Zone: <span>{{zone | json}}</span>
@@ -5,6 +6,9 @@
   <br>
   <br>
 
-  <ng-moment-timezone-picker [getUserZone]="getUserZone" [(ngModel)]="zone">
+  <ng-moment-timezone-picker
+    [getUserZone]="getUserZone"
+    [(ngModel)]="zone"
+    [disabled]="zoneDisable">
   </ng-moment-timezone-picker>
 </div>

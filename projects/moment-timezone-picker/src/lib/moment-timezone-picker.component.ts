@@ -57,6 +57,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   @Input() customNotFoundText = 'No zone found';
   @Input() clearable = false;
   @Input() virtualScroll = true;
+  @Input() disabled = false;
 
   /**
    * Internals section.
@@ -139,6 +140,11 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.getUserZone && changes.getUserZone.currentValue) {
       this.guessUserTimezone();
+    }
+    if (changes.disabled) {
+      setTimeout(() => {
+        changes.disabled.currentValue ? this.form.get('timezone').disable() : this.form.get('timezone').enable();
+      });
     }
   }
 

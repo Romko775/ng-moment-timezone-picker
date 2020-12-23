@@ -9,6 +9,8 @@ export class AppComponent implements OnInit {
 
   zone: any;
 
+  zoneDisable = false;
+
   private _getUserZone = false;
   set getUserZone(val: boolean) {
     this._getUserZone = val;
@@ -31,5 +33,9 @@ export class AppComponent implements OnInit {
       // };
       // this.getUserZone = true;
     // }, 3000);
+  }
+
+  toggle() {
+    this.zoneDisable = !this.zoneDisable;
   }
 }
