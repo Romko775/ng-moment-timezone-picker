@@ -83,6 +83,7 @@ In component `*.scss` or `*.sass` import theme
 |[clearable] | `boolean` | `false` | no | Sets that if select can be clearable. |
 |[virtualScroll] | `boolean` | `true` | no | Sets select to use virtual scroll. |
 |[disabled] | `boolean` | `false` | no | Disables the ng-select component |
+|[config] | `object` | [Object object] | no | See interface `SelectConfig` |
 
 #### Object: TZone
 | Field | Type | Example |
@@ -93,6 +94,22 @@ In component `*.scss` or `*.sass` import theme
 | timeValue | `string` | `+00:00` |
 | name | `string` | `Europe/London (+00:00)` |
 
+#### Object: SelectConfig
+Default value
+```ts
+config: SelectConfig = {
+  hideSelected: false,
+  dropdownPosition: 'auto',
+  appearance: 'underline',
+  clearOnBackspace: true,
+  closeOnSelect: true,
+  appendTo: null
+};
+```
+
+For more info read [this topic](https://github.com/ng-select/ng-select).
+
+!!!NOTE: only some properties will be configurable
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)

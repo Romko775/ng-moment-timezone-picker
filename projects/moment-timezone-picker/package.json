@@ -1,6 +1,6 @@
 {
   "name": "moment-timezone-picker",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A simple angular moment timezone picker",
   "license": "MIT",
   "author": "Roman Yanush",

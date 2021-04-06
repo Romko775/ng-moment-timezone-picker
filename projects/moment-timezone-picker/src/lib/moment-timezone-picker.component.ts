@@ -22,6 +22,15 @@ export class TZone {
   abbr: string;
 }
 
+export interface SelectConfig {
+  appearance: 'underline' | 'outline';
+  appendTo: string;
+  clearOnBackspace: boolean;
+  closeOnSelect: boolean;
+  dropdownPosition: 'auto' | 'bottom' | 'top';
+  hideSelected: boolean;
+}
+
 @Component({
   selector: 'ng-moment-timezone-picker',
   template: `
@@ -33,7 +42,14 @@ export class TZone {
                  [groupBy]="'group'"
                  bindLabel="name"
                  [placeholder]="customPlaceholderText"
-                 [notFoundText]="customNotFoundText">
+                 [notFoundText]="customNotFoundText"
+
+                 [appearance]="config.appearance"
+                 [appendTo]="config.appendTo"
+                 [clearOnBackspace]="config.clearOnBackspace"
+                 [closeOnSelect]="config.closeOnSelect"
+                 [dropdownPosition]="config.dropdownPosition"
+                 [hideSelected]="config.hideSelected">
       </ng-select>
     </div>
   `,
@@ -58,6 +74,24 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   @Input() clearable = false;
   @Input() virtualScroll = true;
   @Input() disabled = false;
+
+  @Input()
+  set config(conf: SelectConfig) {
+    this._config = conf;
+  }
+
+  private _config: SelectConfig = {
+    hideSelected: false,
+    dropdownPosition: 'auto',
+    appearance: 'underline',
+    clearOnBackspace: true,
+    closeOnSelect: true,
+    appendTo: null
+  };
+
+  get config(): SelectConfig {
+    return this._config;
+  }
 
   /**
    * Internals section.
