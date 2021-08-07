@@ -12,6 +12,7 @@
 ## Versions
 | Angular | Version |
 | --- | --- |
+| 11 | 3.x.x |
 | 10 | 2.x.x |
 | 8 | 1.x.x |
 | 7 | 0.x.x |
