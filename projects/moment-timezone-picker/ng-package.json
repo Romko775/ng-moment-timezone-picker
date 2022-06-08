@@ -2,15 +2,12 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/moment-timezone-picker",
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "common": "common"
-    }
+    "entryFile": "src/public_api.ts"
   },
   "assets": [
     "assets/*"
   ],
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "@ng-select/ng-select",
     "moment-timezone"
   ]
