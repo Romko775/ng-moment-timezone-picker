@@ -16,8 +16,8 @@
   ],
   "repository": "https://github.com/Romko775/ng-moment-timezone-picker",
   "peerDependencies": {
-    "@angular/common": "~13.0.0",
-    "@angular/core": "~13.0.0"
+    "@angular/common": ">=13.0.0 <14.0.0",
+    "@angular/core": ">=13.0.0 <14.0.0"
   },
   "dependencies": {
     "@ng-select/ng-select": "^8.3.0",
