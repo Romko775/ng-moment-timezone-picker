@@ -1,6 +1,6 @@
 {
   "name": "moment-timezone-picker",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A simple angular moment timezone picker",
   "license": "MIT",
   "author": "Roman Yanush",
@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@ng-select/ng-select": "^8.3.0",
-    "moment-timezone": "^0.5.34"
+    "moment-timezone": "^0.5.37"
   }
 }
