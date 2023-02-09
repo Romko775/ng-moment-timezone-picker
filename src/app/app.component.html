@@ -1,15 +1,25 @@
 <button class="btn" (click)="toggle()">Toggle disabled</button>
 <div class="main">
-  <span>
-    Zone: <span>{{zone | json}}</span>
-  </span>
-  <br>
-  <br>
-
-  <ng-moment-timezone-picker
-    [getUserZone]="getUserZone"
-    [(ngModel)]="zone"
-    [config]="config"
-    [disabled]="zoneDisable">
-  </ng-moment-timezone-picker>
+  <div>
+    <div class="main__result"> Zone: <span>{{zone | json}}</span></div>
+    <ng-moment-timezone-picker
+      [getUserZone]="getUserZone"
+      [(ngModel)]="zone"
+      [config]="config"
+      [disabled]="zoneDisable">
+    </ng-moment-timezone-picker>
+  </div>
+  <div>
+    <div class="main__result"> Zone with transform FN: <span>{{zoneWithTransform | json}}</span></div>
+    <ng-moment-timezone-picker
+      [valueTransformFN]="valueTransformFN"
+      [getUserZone]="getUserZone"
+      [(ngModel)]="zoneWithTransform"
+      [config]="config"
+      [disabled]="zoneDisable">
+    </ng-moment-timezone-picker>
+    <div class="notes">
+      <p>Available from v5.1.0</p>
+    </div>
+  </div>
 </div>
