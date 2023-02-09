@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectConfig} from '../../projects/moment-timezone-picker/src/lib/moment-timezone-picker.component';
+import {TZone} from 'moment-timezone-picker';
 
 @Component({
   selector: 'tz-root',
@@ -9,8 +10,11 @@ import {SelectConfig} from '../../projects/moment-timezone-picker/src/lib/moment
 export class AppComponent implements OnInit {
 
   zone: any;
+  zoneWithTransform: any;
 
   zoneDisable = false;
+
+  valueTransformFN = (obj: TZone) => obj?.nameValue;
 
   private _getUserZone = false;
   set getUserZone(val: boolean) {

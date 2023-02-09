@@ -1,6 +1,25 @@
 @import "~node_modules/moment-timezone-picker/assets/moment-timezone-picker.theme";
 
 .main {
-  padding-top: 50px;
+  padding: 50px;
   text-align: center;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  &__result {
+    min-height: 50px;
+  }
+}
+
+.notes {
+  text-align: start;
+  font-size: 14px;
+
+  > p {
+    &:before {
+      content: '*';
+    }
+  }
 }
