@@ -1,14 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  forwardRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewEncapsulation
-} from '@angular/core';
+import {AfterViewInit, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import * as momentZone from 'moment-timezone';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -74,6 +64,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   @Input() clearable = false;
   @Input() virtualScroll = true;
   @Input() disabled = false;
+  @Input() valueTransformFN?: (obj: TZone | null) => any;
 
   @Input()
   set config(conf: SelectConfig) {
@@ -156,9 +147,15 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
    * Propagate result to parent component.
    */
   private fireChanges() {
-    if (this.propagateChange) {
-      this.propagateChange(this.form.get('timezone').value);
+    if (!this.propagateChange) {
+      return;
     }
+    const timezone = this.form.get('timezone').value;
+    this.propagateChange(
+      this.valueTransformFN
+        ? this.valueTransformFN(timezone)
+        : timezone
+    );
   }
 
   /**

@@ -26,7 +26,7 @@ For select input [@ng-select/ng-select](https://github.com/ng-select/ng-select)
 For time core [moment-timezone](https://momentjs.com/timezone/)
 
 ## Getting started
-### Step 1: Install 
+### Step 1: Install
 
 #### NPM
 ```shell
@@ -65,8 +65,8 @@ export class AppModule { }
 #### 2) As reactive form
 ```html
 <div [formGroup]="your">
-<ng-moment-timezone-picker [formControlName]="'yourControlName'">
-</ng-moment-timezone-picker>
+  <ng-moment-timezone-picker [formControlName]="'yourControlName'">
+  </ng-moment-timezone-picker>
 </div>
 ```
 
@@ -76,26 +76,29 @@ In component `*.scss` or `*.sass` import theme
 @import "~node_modules/moment-timezone-picker/assets/moment-timezone-picker.theme";
 ```
 
+Or write own styles :)
+
 ### Step 5: Configuration
 #### Inputs
-| Input  | Type | Default | Required | Description |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-|[customPlaceholderText] | `string` | `Choose...` | no | Allows you to localize the placeholder text. |
-|[customNotFoundText] | `string` | `No zone found` | no | Allows you to localize not found text |
-|[getUserZone] | `boolean` | `false` | no | Allows you to guess user timezone. If `true` also emits value on init. |
-|[clearable] | `boolean` | `false` | no | Sets that if select can be clearable. |
-|[virtualScroll] | `boolean` | `true` | no | Sets select to use virtual scroll. |
-|[disabled] | `boolean` | `false` | no | Disables the ng-select component |
-|[config] | `object` | [Object object] | no | See interface `SelectConfig` |
+| Input                   | Type       | Default           | Required | Description                                                            |
+|-------------------------|------------|-------------------|----------|------------------------------------------------------------------------|
+| [customPlaceholderText] | `string`   | `Choose...`       | no       | Allows you to localize the placeholder text.                           |
+| [customNotFoundText]    | `string`   | `No zone found`   | no       | Allows you to localize not found text                                  |
+| [getUserZone]           | `boolean`  | `false`           | no       | Allows you to guess user timezone. If `true` also emits value on init. |
+| [clearable]             | `boolean`  | `false`           | no       | Sets that if select can be clearable.                                  |
+| [virtualScroll]         | `boolean`  | `true`            | no       | Sets select to use virtual scroll.                                     |
+| [disabled]              | `boolean`  | `false`           | no       | Disables the ng-select component                                       |
+| [config]                | `object`   | `[Object object]` | no       | See interface `SelectConfig`                                           |
+| [valueTransformFN]      | `function` | `undefined`       | no       | See `valueTransformFN Type`                                            |
 
 #### Object: TZone
-| Field | Type | Example |
-|-------|------|---------|
-| abbr | `string` | `GMT` |
-| group | `string` | `Europe` |
-| nameValue | `string` | `Europe/London` |
-| timeValue | `string` | `+00:00` |
-| name | `string` | `Europe/London (+00:00)` |
+| Field     | Type     | Example                  |
+|-----------|----------|--------------------------|
+| abbr      | `string` | `GMT`                    |
+| group     | `string` | `Europe`                 |
+| nameValue | `string` | `Europe/London`          |
+| timeValue | `string` | `+00:00`                 |
+| name      | `string` | `Europe/London (+00:00)` |
 
 #### Object: SelectConfig
 Default value
@@ -112,11 +115,16 @@ config: SelectConfig = {
 
 For more info read [this topic](https://github.com/ng-select/ng-select).
 
-!!!NOTE: only some properties will be configurable
+> ❗NOTE: only some properties will be configurable
+
+#### valueTransformFN Type
+```typescript
+valueTransformFN: (obj: TZone | null) => any;
+```
+> ❗Please note that for backward support we need to pass `nameValue`, because this field is the most specific to find timezone.
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)
-
 
 # Editing package
 ### Clone the package
