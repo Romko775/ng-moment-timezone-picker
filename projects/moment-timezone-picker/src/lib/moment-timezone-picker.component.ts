@@ -15,7 +15,7 @@ import * as momentZone from 'moment-timezone';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {DEFAULT_SELECT_CONFIG, SelectConfig, TZone} from './core';
+import {DEFAULT_SELECT_CONFIG, formatZone, SelectConfig, TZone} from './core';
 
 @Component({
   selector: 'ng-moment-timezone-picker',
@@ -100,7 +100,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   }
 
   public ngOnInit(): void {
-    this.timeZones = momentZone.tz.names().map((zone: string) => this.formatZone(zone));
+    this.timeZones = momentZone.tz.names().map((zone: string) => formatZone(zone));
     this.setTimezoneChangeListener();
   }
 
@@ -132,27 +132,13 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
 
   private guessUserTimezone(): void {
     setTimeout(() => {
-      if (this.getUserZone) {
-        const guessedZone = momentZone.tz.guess(true);
-        this.form.get('timezone').setValue(this.formatZone(guessedZone));
+      if (!this.getUserZone) {
+        console.warn('User zone guess turned off');
+        return;
       }
+      const guessedZone = momentZone.tz.guess(true);
+      this.form.get('timezone').setValue(formatZone(guessedZone));
     });
-  }
-
-  /**
-   * Make TZone object from simple string.
-   * @link ngOnInit
-   */
-  private formatZone(zone: string): TZone {
-    const utc: string = momentZone.tz(zone).format('Z');
-    const abbr: string = momentZone.tz(zone).zoneAbbr();
-    return {
-      name: `${zone} (${utc})`,
-      nameValue: zone,
-      timeValue: utc,
-      group: zone.split('/', 1)[0],
-      abbr: abbr
-    };
   }
 
   /**
@@ -170,7 +156,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   }
 
   private clearZone() {
-    this.form.get('timezone').setValue(null);
+    this.form.get('timezone').reset();
   }
 
   /**
@@ -182,6 +168,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   }
 
   registerOnTouched(fn: any): void {
+    this.propagateChange = fn;
   }
 
   writeValue(zone: string | TZone): void {
