@@ -77,25 +77,23 @@ describe('MomentTimezonePickerComponent', () => {
     expect(component.form.get('timezone').value).not.toBeNull();
   }));
 
-  it('should handle on changes:disabled:true', fakeAsync(() => {
+  it('should handle on changes:disabled:true', () => {
     const changes = {
       disabled: new SimpleChange(false, true, true)
     };
     component.disabled = true;
     component.ngOnChanges(changes);
-    tick(1000);
     expect(component.form.get('timezone').disabled).toBeTruthy();
-  }));
+  });
 
-  it('should handle on changes:disabled:false', fakeAsync(() => {
+  it('should handle on changes:disabled:false', () => {
     const changes = {
       disabled: new SimpleChange(true, false, false)
     };
     component.disabled = false;
     component.ngOnChanges(changes);
-    tick(1000);
     expect(component.form.get('timezone').enable).toBeTruthy();
-  }));
+  });
 
   it('should write value and find zone as string', () => {
     const timeZone = 'America/Los_Angeles';

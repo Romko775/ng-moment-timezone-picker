@@ -1,4 +1,16 @@
-import {AfterViewInit, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import * as momentZone from 'moment-timezone';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
@@ -34,7 +46,8 @@ import {DEFAULT_SELECT_CONFIG, SelectConfig, TZone} from './core';
       multi: true
     }
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, ControlValueAccessor {
 
@@ -70,7 +83,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   private propagateChange: (_: any) => {};
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   /**
@@ -82,9 +95,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
       this.guessUserTimezone();
     }
     if (changes.disabled) {
-      setTimeout(() => {
-        changes.disabled.currentValue ? this.form.get('timezone').disable() : this.form.get('timezone').enable();
-      });
+      this.toggleTimezoneCtrl(changes.disabled.currentValue);
     }
   }
 
@@ -105,6 +116,13 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   /**
    * Private
    */
+
+  private toggleTimezoneCtrl(isDisabled: boolean): void {
+    isDisabled
+      ? this.form.get('timezone').disable()
+      : this.form.get('timezone').enable();
+    this.cdr.detectChanges();
+  }
 
   private setTimezoneChangeListener(): void {
     this.form.get('timezone').valueChanges
