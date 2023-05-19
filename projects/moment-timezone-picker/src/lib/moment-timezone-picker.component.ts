@@ -1,25 +1,21 @@
-import {AfterViewInit, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import * as momentZone from 'moment-timezone';
-import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-export class TZone {
-  name: string;
-  nameValue: string;
-  timeValue: string;
-  group: string;
-  abbr: string;
-}
-
-export interface SelectConfig {
-  appearance: 'underline' | 'outline';
-  appendTo: string;
-  clearOnBackspace: boolean;
-  closeOnSelect: boolean;
-  dropdownPosition: 'auto' | 'bottom' | 'top';
-  hideSelected: boolean;
-}
+import {DEFAULT_SELECT_CONFIG, formatZone, SelectConfig, TZone} from './core';
 
 @Component({
   selector: 'ng-moment-timezone-picker',
@@ -43,7 +39,6 @@ export interface SelectConfig {
       </ng-select>
     </div>
   `,
-  styleUrls: ['./moment-timezone-picker.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -51,7 +46,8 @@ export interface SelectConfig {
       multi: true
     }
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges, ControlValueAccessor {
 
@@ -71,14 +67,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
     this._config = conf;
   }
 
-  private _config: SelectConfig = {
-    hideSelected: false,
-    dropdownPosition: 'auto',
-    appearance: 'underline',
-    clearOnBackspace: true,
-    closeOnSelect: true,
-    appendTo: null
-  };
+  private _config: SelectConfig = DEFAULT_SELECT_CONFIG;
 
   get config(): SelectConfig {
     return this._config;
@@ -88,59 +77,68 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
    * Internals section.
    */
   timeZones: Array<TZone>;
-  form: FormGroup;
+  form: UntypedFormGroup = this.fb.group({
+    timezone: []
+  });
   private propagateChange: (_: any) => {};
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder, private cdr: ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
-    this.timeZones = momentZone.tz.names().map((zone: string) => this.formatZone(zone));
-    this.form = this.fb.group({
-      timezone: []
-    });
+  /**
+   * Lifecycle hooks
+   */
 
-    /**
-     * Value change subscription.
-     */
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.getUserZone && changes.getUserZone.currentValue) {
+      this.guessUserTimezone();
+    }
+    if (changes.disabled) {
+      this.toggleTimezoneCtrl(changes.disabled.currentValue);
+    }
+  }
+
+  public ngOnInit(): void {
+    this.timeZones = momentZone.tz.names().map((zone: string) => formatZone(zone));
+    this.setTimezoneChangeListener();
+  }
+
+  public ngAfterViewInit(): void {
+    this.guessUserTimezone();
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Private
+   */
+
+  private toggleTimezoneCtrl(isDisabled: boolean): void {
+    isDisabled
+      ? this.form.get('timezone').disable()
+      : this.form.get('timezone').enable();
+    this.cdr.detectChanges();
+  }
+
+  private setTimezoneChangeListener(): void {
     this.form.get('timezone').valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.fireChanges());
   }
 
-  ngAfterViewInit(): void {
-    this.guessUserTimezone();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   private guessUserTimezone(): void {
     setTimeout(() => {
-      if (this.getUserZone) {
-        const guessedZone = momentZone.tz.guess(true);
-        this.form.get('timezone').setValue(this.formatZone(guessedZone));
+      if (!this.getUserZone) {
+        console.warn('User zone guess turned off');
+        return;
       }
+      const guessedZone = momentZone.tz.guess(true);
+      this.form.get('timezone').setValue(formatZone(guessedZone));
     });
-  }
-
-  /**
-   * Make TZone object from simple string.
-   * @link ngOnInit
-   */
-  formatZone(zone: string): TZone {
-    const utc: string = momentZone.tz(zone).format('Z');
-    const abbr: string = momentZone.tz(zone).zoneAbbr();
-    return {
-      name: `${zone} (${utc})`,
-      nameValue: zone,
-      timeValue: utc,
-      group: zone.split('/', 1)[0],
-      abbr: abbr
-    };
   }
 
   /**
@@ -151,60 +149,48 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
       return;
     }
     const timezone = this.form.get('timezone').value;
-    this.propagateChange(
-      this.valueTransformFN
-        ? this.valueTransformFN(timezone)
-        : timezone
-    );
+    const transformedValue = this.valueTransformFN
+      ? this.valueTransformFN(timezone)
+      : timezone;
+    this.propagateChange(transformedValue);
   }
 
-  /**
-   * Clear selection.
-   */
   private clearZone() {
-    this.form.get('timezone').setValue(null);
+    this.form.get('timezone').reset();
+  }
+
+  private validateZoneFromUpperLevels(zone: string | TZone): TZone | null {
+    if (typeof zone === 'string' && zone.length > 0) {
+      return this.timeZones.find(z => z.nameValue === zone) ?? null;
+    }
+    if (typeof zone === 'object') {
+      return this.timeZones.find(z => z.nameValue === zone.nameValue) ?? null;
+    }
+    return null;
   }
 
   /**
-   * Handle parent imports changes.
+   * Access controls
    */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.getUserZone && changes.getUserZone.currentValue) {
-      this.guessUserTimezone();
-    }
-    if (changes.disabled) {
-      setTimeout(() => {
-        changes.disabled.currentValue ? this.form.get('timezone').disable() : this.form.get('timezone').enable();
-      });
-    }
-  }
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
   }
 
   registerOnTouched(fn: any): void {
+    // not used
   }
 
-  /**
-   * Handle parent model value changes.
-   */
-  writeValue(zone: string | TZone): void {
-    if (zone) {
-      let _zone: TZone = null;
-
-      if (typeof zone === 'string' && zone.length > 0) {
-        _zone = this.timeZones.find(z => z.nameValue === zone);
-      } else if (typeof zone === 'object') {
-        _zone = this.timeZones.find(z => z.nameValue === zone.nameValue);
-      }
-
-      if (_zone) {
-        this.form.get('timezone').setValue(_zone);
-      }
-
-    } else {
+  writeValue(zone: string | TZone | null | undefined): void {
+    if (!zone) {
       this.clearZone();
+      console.warn('Invalid zone passed');
+      return;
+    }
+
+    let _zone: TZone | null = this.validateZoneFromUpperLevels(zone);
+    if (_zone) {
+      this.form.get('timezone').setValue(_zone);
     }
   }
 

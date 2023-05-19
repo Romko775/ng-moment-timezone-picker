@@ -98,6 +98,15 @@
               "src/assets"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -138,11 +147,20 @@
           "options": {
             "main": "projects/moment-timezone-picker/src/test.ts",
             "tsConfig": "projects/moment-timezone-picker/tsconfig.spec.json",
-            "karmaConfig": "projects/moment-timezone-picker/karma.conf.js"
+            "karmaConfig": "projects/moment-timezone-picker/karma.conf.js",
+            "codeCoverage": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
-  },
-  "defaultProject": "timezone-picker"
+  }
 }
