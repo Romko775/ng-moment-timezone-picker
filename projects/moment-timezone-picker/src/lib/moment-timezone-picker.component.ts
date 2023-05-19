@@ -178,7 +178,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   }
 
   registerOnTouched(fn: any): void {
-    this.propagateChange = fn;
+    // not used
   }
 
   writeValue(zone: string | TZone | null | undefined): void {
