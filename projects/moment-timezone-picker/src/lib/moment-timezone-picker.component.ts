@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import * as momentZone from 'moment-timezone';
-import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, UntypedFormBuilder, UntypedFormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {DEFAULT_SELECT_CONFIG, formatZone, SelectConfig, TZone} from './core';
@@ -77,13 +77,13 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
    * Internals section.
    */
   timeZones: Array<TZone>;
-  form: FormGroup = this.fb.group({
+  form: UntypedFormGroup = this.fb.group({
     timezone: []
   });
   private propagateChange: (_: any) => {};
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private fb: UntypedFormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   /**

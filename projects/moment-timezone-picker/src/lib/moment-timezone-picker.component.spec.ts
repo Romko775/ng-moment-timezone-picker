@@ -2,7 +2,7 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 
 import {MomentTimezonePickerComponent} from './moment-timezone-picker.component';
 import {NO_ERRORS_SCHEMA, SimpleChange} from '@angular/core';
-import {FormBuilder, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {UntypedFormBuilder, NG_VALUE_ACCESSOR} from '@angular/forms';
 import Spy = jasmine.Spy;
 
 const expectedTZone = {
@@ -26,7 +26,7 @@ describe('MomentTimezonePickerComponent', () => {
       declarations: [],
       imports: [],
       providers: [
-        FormBuilder
+        UntypedFormBuilder
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

@@ -11,13 +11,14 @@
 
 ## Versions
 | Angular | Version |
-| --- | --- |
-| 13 | 5.x.x |
-| 12 | 4.x.x |
-| 11 | 3.x.x |
-| 10 | 2.x.x |
-| 8 | 1.x.x |
-| 7 | 0.x.x |
+|---------|---------|
+| 14      | 6.x.x   |
+| 13      | 5.x.x   |
+| 12      | 4.x.x   |
+| 11      | 3.x.x   |
+| 10      | 2.x.x   |
+| 8       | 1.x.x   |
+| 7       | 0.x.x   |
 
 For older version see [OLD_VERSIONS_README.md](./OLD_VERSION_README.md)
 
