@@ -159,6 +159,16 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
     this.form.get('timezone').reset();
   }
 
+  private validateZoneFromUpperLevels(zone: string | TZone): TZone | null {
+    if (typeof zone === 'string' && zone.length > 0) {
+      return this.timeZones.find(z => z.nameValue === zone) ?? null;
+    }
+    if (typeof zone === 'object') {
+      return this.timeZones.find(z => z.nameValue === zone.nameValue) ?? null;
+    }
+    return null;
+  }
+
   /**
    * Access controls
    */
@@ -171,22 +181,16 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
     this.propagateChange = fn;
   }
 
-  writeValue(zone: string | TZone): void {
-    if (zone) {
-      let _zone: TZone = null;
-
-      if (typeof zone === 'string' && zone.length > 0) {
-        _zone = this.timeZones.find(z => z.nameValue === zone);
-      } else if (typeof zone === 'object') {
-        _zone = this.timeZones.find(z => z.nameValue === zone.nameValue);
-      }
-
-      if (_zone) {
-        this.form.get('timezone').setValue(_zone);
-      }
-
-    } else {
+  writeValue(zone: string | TZone | null | undefined): void {
+    if (!zone) {
       this.clearZone();
+      console.warn('Invalid zone passed');
+      return;
+    }
+
+    let _zone: TZone | null = this.validateZoneFromUpperLevels(zone);
+    if (_zone) {
+      this.form.get('timezone').setValue(_zone);
     }
   }
 

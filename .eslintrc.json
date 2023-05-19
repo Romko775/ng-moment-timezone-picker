@@ -1,0 +1,77 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "**/*.html",
+    "**/*.spec.ts",
+    "dist/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "plugins": [
+        "unused-imports"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "off"
+        ],
+        "@angular-eslint/component-selector": [
+          "warn",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "no-empty": "error",
+        "no-empty-function": [
+          "warn",
+          {
+            "allow": [
+              "constructors"
+            ]
+          }
+        ],
+        "no-empty-pattern": "warn",
+        "no-fallthrough": "error",
+        "no-sparse-arrays": "warn",
+        "no-template-curly-in-string": "warn",
+        "no-this-before-super": "error",
+        "no-unreachable": "error",
+        "no-duplicate-imports": "warn",
+        "unused-imports/no-unused-imports": "error",
+        "use-isnan": "warn",
+        "capitalized-comments": "warn",
+        "default-case": "error",
+        "default-case-last": "error",
+        "eqeqeq": "warn",
+        "max-depth": "warn",
+        "object-shorthand": "warn",
+        "yoda": "warn",
+        "curly": ["error", "multi-line"]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}
