@@ -138,7 +138,8 @@
           "options": {
             "main": "projects/moment-timezone-picker/src/test.ts",
             "tsConfig": "projects/moment-timezone-picker/tsconfig.spec.json",
-            "karmaConfig": "projects/moment-timezone-picker/karma.conf.js"
+            "karmaConfig": "projects/moment-timezone-picker/karma.conf.js",
+            "codeCoverage": true
           }
         }
       }
