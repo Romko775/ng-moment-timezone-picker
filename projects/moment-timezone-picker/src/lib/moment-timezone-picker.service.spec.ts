@@ -3,10 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { MomentTimezonePickerService } from './moment-timezone-picker.service';
 
 describe('MomentTimezonePickerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: MomentTimezonePickerService;
 
-  it('should be created', () => {
-    const service: MomentTimezonePickerService = TestBed.get(MomentTimezonePickerService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(MomentTimezonePickerService);
+  });
+
+  it('should create', () => {
     expect(service).toBeTruthy();
   });
 });
