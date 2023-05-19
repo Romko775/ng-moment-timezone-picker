@@ -3,23 +3,7 @@ import * as momentZone from 'moment-timezone';
 import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-
-export class TZone {
-  name: string;
-  nameValue: string;
-  timeValue: string;
-  group: string;
-  abbr: string;
-}
-
-export interface SelectConfig {
-  appearance: 'underline' | 'outline';
-  appendTo: string;
-  clearOnBackspace: boolean;
-  closeOnSelect: boolean;
-  dropdownPosition: 'auto' | 'bottom' | 'top';
-  hideSelected: boolean;
-}
+import {DEFAULT_SELECT_CONFIG, SelectConfig, TZone} from './core';
 
 @Component({
   selector: 'ng-moment-timezone-picker',
@@ -43,7 +27,6 @@ export interface SelectConfig {
       </ng-select>
     </div>
   `,
-  styleUrls: ['./moment-timezone-picker.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -71,14 +54,7 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
     this._config = conf;
   }
 
-  private _config: SelectConfig = {
-    hideSelected: false,
-    dropdownPosition: 'auto',
-    appearance: 'underline',
-    clearOnBackspace: true,
-    closeOnSelect: true,
-    appendTo: null
-  };
+  private _config: SelectConfig = DEFAULT_SELECT_CONFIG;
 
   get config(): SelectConfig {
     return this._config;
@@ -175,12 +151,13 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
     this.propagateChange(transformedValue);
   }
 
-  /**
-   * Clear selection.
-   */
   private clearZone() {
     this.form.get('timezone').setValue(null);
   }
+
+  /**
+   * Access controls
+   */
 
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
@@ -189,9 +166,6 @@ export class MomentTimezonePickerComponent implements OnInit, AfterViewInit, OnD
   registerOnTouched(fn: any): void {
   }
 
-  /**
-   * Handle parent model value changes.
-   */
   writeValue(zone: string | TZone): void {
     if (zone) {
       let _zone: TZone = null;
