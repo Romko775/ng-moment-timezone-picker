@@ -5,5 +5,5 @@ export interface SelectConfig {
   closeOnSelect: boolean;
   dropdownPosition: 'auto' | 'bottom' | 'top';
   hideSelected: boolean;
-  searcchable: boolean;
+  searchable: boolean;
 }

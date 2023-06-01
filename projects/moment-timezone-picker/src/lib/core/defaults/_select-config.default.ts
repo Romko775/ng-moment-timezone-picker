@@ -7,5 +7,5 @@ export const DEFAULT_SELECT_CONFIG: SelectConfig = {
   clearOnBackspace: true,
   closeOnSelect: true,
   appendTo: null,
-  searcchable: true,
+  searchable: true,
 };
