@@ -6,5 +6,6 @@ export const DEFAULT_SELECT_CONFIG: SelectConfig = {
   appearance: 'underline',
   clearOnBackspace: true,
   closeOnSelect: true,
-  appendTo: null
+  appendTo: null,
+  searchable: true,
 };

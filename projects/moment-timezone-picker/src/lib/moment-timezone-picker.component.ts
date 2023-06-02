@@ -35,7 +35,8 @@ import {DEFAULT_SELECT_CONFIG, formatZone, SelectConfig, TZone} from './core';
                  [clearOnBackspace]="config.clearOnBackspace"
                  [closeOnSelect]="config.closeOnSelect"
                  [dropdownPosition]="config.dropdownPosition"
-                 [hideSelected]="config.hideSelected">
+                 [hideSelected]="config.hideSelected"
+                 [searchable]="config.searchable">
       </ng-select>
     </div>
   `,
