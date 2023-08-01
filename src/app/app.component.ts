@@ -30,7 +30,8 @@ export class AppComponent implements OnInit {
     clearOnBackspace: false,
     closeOnSelect: false,
     dropdownPosition: 'auto',
-    hideSelected: false
+    hideSelected: false,
+    searchable: true
   };
 
   ngOnInit(): void {
