@@ -1,12 +1,12 @@
 {
   "name": "moment-timezone-picker",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "A simple angular moment timezone picker",
   "license": "MIT",
   "author": "Roman Yanush",
   "keywords": [
     "angular",
-    "angular 16",
+    "angular 17",
     "ng",
     "ng2",
     "moment",
@@ -16,11 +16,11 @@
   ],
   "repository": "https://github.com/Romko775/ng-moment-timezone-picker",
   "peerDependencies": {
-    "@angular/common": ">=16.0.0 <17.0.0",
-    "@angular/core": ">=16.0.0 <17.0.0"
+    "@angular/common": ">=17.0.0 <18.0.0",
+    "@angular/core": ">=17.0.0 <18.0.0"
   },
   "dependencies": {
-    "@ng-select/ng-select": "^11.1.1",
+    "@ng-select/ng-select": "^12.0.6",
     "moment-timezone": "^0.5.43"
   }
 }
