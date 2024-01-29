@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "timezone-picker:build"
+            "buildTarget": "timezone-picker:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "timezone-picker:build:production"
+              "buildTarget": "timezone-picker:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "timezone-picker:build"
+            "buildTarget": "timezone-picker:build"
           }
         },
         "test": {
