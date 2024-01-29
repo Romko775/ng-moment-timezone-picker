@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectConfig, TZone} from 'moment-timezone-picker';
+// import {SelectConfig, TZone} from '../../projects/moment-timezone-picker/src/public_api';
 
 @Component({
   selector: 'tz-root',
