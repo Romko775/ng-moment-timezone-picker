@@ -24,7 +24,7 @@
     "moment-timezone": "^0.5.43",
     "moment-timezone-picker": "file:dist/moment-timezone-picker",
     "rxjs": "~7.8.1",
-    "zone.js": "~0.13.1"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.6",
@@ -58,6 +58,6 @@
     "tsickle": "0.43.0",
     "tslib": "^2.3.0",
     "tslint": "~6.1.3",
-    "typescript": "~4.9.5"
+    "typescript": "~5.3.3"
   }
 }
